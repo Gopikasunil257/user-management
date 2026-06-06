@@ -60,3 +60,11 @@
   background: #1d4ed8;
   transform: scale(1.05);
 }
+.favorite-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+
+  float: right;
+}

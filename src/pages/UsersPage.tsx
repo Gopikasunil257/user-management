@@ -10,6 +10,8 @@ function UsersPage() {
   const [companyFilter,setCompanyFilter]=useState("");
   const[cityFilter,setCityFilter]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [showFavorites, setShowFavorites] =useState(false);
   const[darkMode,setDarkMode]=useState(localStorage.getItem("theme")=="dark");
   const companies=[
     ...new Set(
@@ -38,11 +40,13 @@ const filteredUser = user.filter((user) => {
   const matchesCity =
     cityFilter === "" ||
     user.address.city === cityFilter;
-
+const matchesFavorite =
+  !showFavorites ||
+  favorites.includes(user.id);
   return (
     matchesSearch &&
     matchesCompany &&
-    matchesCity
+    matchesCity&& matchesFavorite
   );
 });
   const sortedUsers = [...filteredUser];
@@ -106,7 +110,15 @@ const toggleTheme = () => {
     newTheme ? "dark" : "light"
   );
 };
+const toggleFavorite = (userId: number) => {
+  setFavorites((prev) =>
+    prev.includes(userId)
+      ? prev.filter((id) => id !== userId)
+      : [...prev, userId]
+  );
+};
   return (
+    
     
     <div className={darkMode ? "dashboard dark":"dashboard light"}>
     <h1>User Dashboard</h1>
@@ -121,7 +133,12 @@ const toggleTheme = () => {
   <div className="stats-container">
     <p className="results-count">
   Showing {filteredUser.length} users
+  
 </p>
+<div className="stat-card">
+  <h3>Favorites</h3>
+  <p>{favorites.length}</p>
+</div>
     <div className="stat-card">
       <h3>Total Users</h3>
       <p>{user.length}</p>
@@ -238,10 +255,20 @@ const toggleTheme = () => {
               <UserCard
                 key={user.id}
                 user={user}
+                isFavorite={favorites.includes(user.id)}
+  onToggleFavorite={toggleFavorite}
               />
             ))}
           </div>
-
+<button
+  onClick={() =>
+    setShowFavorites(!showFavorites)
+  }
+>
+  {showFavorites
+    ? "Show All"
+    : "Show Favorites"}
+</button>
           <div className="pagination">
             <button
               onClick={() =>

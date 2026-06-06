@@ -1,12 +1,22 @@
 import "../style/UserCard.css";
 import type {User} from "../types/Data";
 import { Link } from "react-router-dom";
-interface UserCardProps{
-    user:User;
+interface UserCardProps {
+  user: User;
+  isFavorite: boolean;
+  onToggleFavorite: (id: number) => void;
 }
-function UserCard({user}:UserCardProps){
+function UserCard({user,isFavorite,onToggleFavorite}:UserCardProps){
     return(
         <div className="user-card">
+             <button
+    className="favorite-btn"
+    onClick={() =>
+      onToggleFavorite(user.id)
+    }
+  >
+    {isFavorite ? "⭐" : "☆"}
+  </button>
             <div className="avatar">
         {user.name.charAt(0)}
       </div>
