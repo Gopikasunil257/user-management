@@ -98,9 +98,26 @@ const filteredUser = user.filter((user) => {
   return (
     
     <div className="dashboard">
-      <h1>User Dashboard</h1>
+  <h1>User Dashboard</h1>
 
-      <div className="controls">
+  <div className="stats-container">
+    <div className="stat-card">
+      <h3>Total Users</h3>
+      <p>{user.length}</p>
+    </div>
+
+    <div className="stat-card">
+      <h3>Companies</h3>
+      <p>{companies.length}</p>
+    </div>
+
+    <div className="stat-card">
+      <h3>Cities</h3>
+      <p>{cities.length}</p>
+    </div>
+  </div>
+
+  <div className="controls">
         <SearchBar
   search={search}
   setSearch={(value) => {
