@@ -7,20 +7,43 @@ function UsersPage() {
   const { user, loading,error } = useUser();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("");
-  const [company]
+  const [companyFilter,setCompanyFilter]=useState("");
+  const[cityFilter,setCityFilter]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredUser = user.filter(
-    (user) =>
-      user.name
-        .toLowerCase()
-        .includes(search.toLowerCase()) ||
-      user.username
-        .toLowerCase()
-        .includes(search.toLowerCase()) ||
-      user.email
-        .toLowerCase()
-        .includes(search.toLowerCase())
+  const companies=[
+    ...new Set(
+      user.map((u)=>u.company.name)
+    ),
+  ];
+  const cities=[
+    ...new Set(user.map((u)=> u.address.city)),
+  ];
+const filteredUser = user.filter((user) => {
+  const matchesSearch =
+    user.name
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    user.username
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    user.email
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+  const matchesCompany =
+    companyFilter === "" ||
+    user.company.name === companyFilter;
+
+  const matchesCity =
+    cityFilter === "" ||
+    user.address.city === cityFilter;
+
+  return (
+    matchesSearch &&
+    matchesCompany &&
+    matchesCity
   );
+});
   const sortedUsers = [...filteredUser];
   if (sortBy === "name-asc") {
     sortedUsers.sort((a, b) =>
@@ -92,6 +115,54 @@ function UsersPage() {
             setSortBy(e.target.value)
           }
         >
+        {/* Company Filter */}
+  <select
+    className="sort-select"
+    value={sortBy}
+    onChange={(e) => setSortBy(e.target.value)}
+  >
+    <option value="">Sort By</option>
+    <option value="name-asc">Name (A-Z)</option>
+    <option value="name-desc">Name (Z-A)</option>
+    <option value="username-asc">Username (A-Z)</option>
+    <option value="username-desc">Username (Z-A)</option>
+    <option value="email-asc">Email (A-Z)</option>
+    <option value="email-desc">Email (Z-A)</option>
+  </select>
+
+  <select
+    className="sort-select"
+    value={companyFilter}
+    onChange={(e) => {
+      setCompanyFilter(e.target.value);
+      setCurrentPage(1);
+    }}
+  >
+    <option value="">All Companies</option>
+
+    {companies.map((company) => (
+      <option key={company} value={company}>
+        {company}
+      </option>
+    ))}
+  </select>
+
+  <select
+    className="sort-select"
+    value={cityFilter}
+    onChange={(e) => {
+      setCityFilter(e.target.value);
+      setCurrentPage(1);
+    }}
+  >
+    <option value="">All Cities</option>
+
+    {cities.map((city) => (
+      <option key={city} value={city}>
+        {city}
+      </option>
+    ))}
+  </select>
           <option value="">Sort By</option>
 
           <option value="name-asc">
