@@ -36,3 +36,8 @@
 .back-btn:hover {
   text-decoration: underline;
 }
+.results-count {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #555;
+}

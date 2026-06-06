@@ -101,6 +101,9 @@ const filteredUser = user.filter((user) => {
   <h1>User Dashboard</h1>
 
   <div className="stats-container">
+    <p className="results-count">
+  Showing {filteredUser.length} users
+</p>
     <div className="stat-card">
       <h3>Total Users</h3>
       <p>{user.length}</p>
@@ -132,7 +135,7 @@ const filteredUser = user.filter((user) => {
             setSortBy(e.target.value)
           }
         >
-        {/* Company Filter */}
+        
   <select
     className="sort-select"
     value={sortBy}
