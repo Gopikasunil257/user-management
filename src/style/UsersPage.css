@@ -90,3 +90,27 @@
   font-weight: bold;
   color: #2563eb;
 }
+.dashboard {
+  min-height: 100vh;
+  padding: 40px;
+  transition: all 0.3s ease;
+}
+
+.light {
+  background: #f4f7fb;
+  color: #111827;
+}
+
+.dark {
+  background: #111827;
+  color: white;
+}
+
+.theme-toggle {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+}

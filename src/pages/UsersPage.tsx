@@ -10,6 +10,7 @@ function UsersPage() {
   const [companyFilter,setCompanyFilter]=useState("");
   const[cityFilter,setCityFilter]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const[darkMode,setDarkMode]=useState(localStorage.getItem("theme")=="dark");
   const companies=[
     ...new Set(
       user.map((u)=>u.company.name)
@@ -95,11 +96,28 @@ const filteredUser = user.filter((user) => {
     </div>
   );
 }
+const toggleTheme = () => {
+  const newTheme = !darkMode;
+
+  setDarkMode(newTheme);
+
+  localStorage.setItem(
+    "theme",
+    newTheme ? "dark" : "light"
+  );
+};
   return (
     
-    <div className="dashboard">
-  <h1>User Dashboard</h1>
-
+    <div className={darkMode ? "dashboard dark":"dashboard light"}>
+    <h1>User Dashboard</h1>
+  <button
+      className="theme-toggle"
+      onClick={toggleTheme}
+    >
+      {darkMode
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode"}
+    </button>
   <div className="stats-container">
     <p className="results-count">
   Showing {filteredUser.length} users
