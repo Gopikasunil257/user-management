@@ -117,6 +117,50 @@ const toggleFavorite = (userId: number) => {
       : [...prev, userId]
   );
 };
+const exportToCSV = () => {
+  const headers = [
+    "Name",
+    "Username",
+    "Email",
+    "Phone",
+    "Website",
+    "Company",
+    "City",
+  ];
+
+  const rows = filteredUser.map((user) => [
+    user.name,
+    user.username,
+    user.email,
+    user.phone,
+    user.website,
+    user.company.name,
+    user.address.city,
+  ]);
+
+  const csvContent = [
+    headers.join(","),
+    ...rows.map((row) => row.join(",")),
+  ].join("\n");
+
+  const blob = new Blob(
+    [csvContent],
+    { type: "text/csv;charset=utf-8;" }
+  );
+
+  const url =
+    window.URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+  link.download = "users.csv";
+
+  link.click();
+
+  window.URL.revokeObjectURL(url);
+};
   return (
     
     
@@ -156,6 +200,13 @@ const toggleFavorite = (userId: number) => {
   </div>
 
   <div className="controls">
+
+<button
+  className="export-btn"
+  onClick={exportToCSV}
+>
+  Export CSV
+</button>
         <SearchBar
   search={search}
   setSearch={(value) => {
