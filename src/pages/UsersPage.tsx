@@ -32,7 +32,6 @@ const filteredUser = user.filter((user) => {
     user.email
       .toLowerCase()
       .includes(search.toLowerCase());
-
   const matchesCompany =
     companyFilter === "" ||
     user.company.name === companyFilter;
@@ -49,6 +48,13 @@ const matchesFavorite =
     matchesCity&& matchesFavorite
   );
 });
+const uniqueCities = new Set(
+  filteredUser.map((user) => user.address.city)
+).size;
+
+const uniqueCompanies = new Set(
+  filteredUser.map((user) => user.company.name)
+).size;
   const sortedUsers = [...filteredUser];
   if (sortBy === "name-asc") {
     sortedUsers.sort((a, b) =>
@@ -174,54 +180,22 @@ const exportToCSV = () => {
         ? "☀️ Light Mode"
         : "🌙 Dark Mode"}
     </button>
-  <div className="stats-container">
-    <p className="results-count">
-  Showing {filteredUser.length} users
-  
-</p>
-<div className="stat-card">
-  <h3>Favorites</h3>
-  <p>{favorites.length}</p>
-</div>
-    <div className="stat-card">
-      <h3>Total Users</h3>
-      <p>{user.length}</p>
-    </div>
+ <div className="controls">
+  <button
+    className="export-btn"
+    onClick={exportToCSV}
+  >
+    Export CSV
+  </button>
 
-    <div className="stat-card">
-      <h3>Companies</h3>
-      <p>{companies.length}</p>
-    </div>
+  <SearchBar
+    search={search}
+    setSearch={(value) => {
+      setSearch(value);
+      setCurrentPage(1);
+    }}
+  />
 
-    <div className="stat-card">
-      <h3>Cities</h3>
-      <p>{cities.length}</p>
-    </div>
-  </div>
-
-  <div className="controls">
-
-<button
-  className="export-btn"
-  onClick={exportToCSV}
->
-  Export CSV
-</button>
-        <SearchBar
-  search={search}
-  setSearch={(value) => {
-    setSearch(value);
-    setCurrentPage(1);
-  }}
-/>
-        <select
-          className="sort-select"
-          value={sortBy}
-          onChange={(e) =>
-            setSortBy(e.target.value)
-          }
-        >
-        
   <select
     className="sort-select"
     value={sortBy}
@@ -269,34 +243,31 @@ const exportToCSV = () => {
       </option>
     ))}
   </select>
-          <option value="">Sort By</option>
+</div>
 
-          <option value="name-asc">
-            Name (A-Z)
-          </option>
+<div
+  className={`stat-chip ${
+    showFavorites ? "active-chip" : ""
+  }`}
+  onClick={() =>
+    setShowFavorites(!showFavorites)
+  }
+>
+  ❤️ {favorites.length} Favorites
+</div>
 
-          <option value="name-desc">
-            Name (Z-A)
-          </option>
+  <div className="stat-chip">
+    👥 {filteredUser.length} Users
+  </div>
 
-          <option value="username-asc">
-            Username (A-Z)
-          </option>
+  <div className="stat-chip">
+    🏢 {uniqueCompanies} Companies
+  </div>
 
-          <option value="username-desc">
-            Username (Z-A)
-          </option>
-
-          <option value="email-asc">
-            Email (A-Z)
-          </option>
-
-          <option value="email-desc">
-            Email (Z-A)
-          </option>
-        </select>
-      </div>
-
+  <div className="stat-chip">
+    📍 {uniqueCities} Cities
+  </div>
+</div>
       {filteredUser.length === 0 ? (
         <h2>No users found</h2>
       ) : (
@@ -311,15 +282,6 @@ const exportToCSV = () => {
               />
             ))}
           </div>
-<button
-  onClick={() =>
-    setShowFavorites(!showFavorites)
-  }
->
-  {showFavorites
-    ? "Show All"
-    : "Show Favorites"}
-</button>
           <div className="pagination">
             <button
               onClick={() =>

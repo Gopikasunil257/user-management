@@ -147,3 +147,37 @@
 .export-btn:hover {
   background: #15803d;
 }
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin: 15px 0 25px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  background: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.stat-chip {
+  background: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.stat-chip:hover {
+  transform: translateY(-2px);
+}
+
+.active-chip {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
