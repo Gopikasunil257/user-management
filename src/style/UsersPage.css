@@ -43,11 +43,10 @@
 }
 .controls {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  align-items: center;
+  gap: 30px; 
+  padding: 20px;
 }
 .search-input {
   width: 500px;
@@ -116,7 +115,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition: 0.3s;
 }
-
+.controls {
+  gap: 24px;
+}
+.search-input {
+  width: 480px;
+}
 .stat-card:hover {
   transform: translateY(-5px);
 }

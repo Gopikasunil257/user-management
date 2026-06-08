@@ -31,6 +31,7 @@ const matchesFavorite =!showFavorites ||favorites.includes(user.id);
     matchesCity&& matchesFavorite
   );
 });
+
 const uniqueCities = new Set(filteredUser.map((user) => user.address.city)).size;
 const uniqueCompanies = new Set(filteredUser.map((user) => user.company.name)).size;
 const sortedUsers = [...filteredUser];
@@ -102,7 +103,7 @@ const exportToCSV = () => {
 };
   return (    
   <div className={darkMode ? "dashboard dark" : "dashboard light"}>
-     <div className="dashboard-shell"></div>
+     <div className="dashboard-shell">
  <div className="top-bar">
   <div className="dashboard-title">
     <div className="profile-icon">👤</div>
@@ -154,15 +155,7 @@ const exportToCSV = () => {
         : "🌙 Dark Mode"}
     </button>
  <div className="controls">
-<button
-  className="stat-item"
-  onClick={() => {
-    setShowFavorites(true);
-    setCurrentPage(1);
-  }}
->
-  ❤️ Favorites: {favorites.length}
-</button>
+  </div>{/*dashboard*/}
   <button
     className="export-btn"
     onClick={exportToCSV}
@@ -234,15 +227,17 @@ const exportToCSV = () => {
   <div className="favorites-header">
     <h2>Favorite Users</h2>
 
-    <button
-      className="back-home-btn"
-      onClick={() => {
-        setShowFavorites(false);
-        setCurrentPage(1);
-      }}
-    >
-      🏠 Back to All Users
-    </button>
+   <button
+  className="stat-item"
+  onClick={() => {
+    setShowFavorites(!showFavorites);
+    setCurrentPage(1);
+  }}
+>
+  {showFavorites
+    ? "🏠 All Users"
+    : `❤️ Favorites: ${favorites.length}`}
+</button>
   </div>
 )}
 <div className="user-grid">
