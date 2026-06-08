@@ -18,9 +18,6 @@ export const useUser =()=>{
       }
     }
     loadUsers();
-        getUsers()
-        .then(setUser)
-        .finally(()=>setLoading(false));
     },[]);
     return{user,loading,error};
 };

@@ -12,90 +12,57 @@ function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showFavorites, setShowFavorites] =useState(false);
+  const [activeStat, setActiveStat] = useState("");
   const[darkMode,setDarkMode]=useState(localStorage.getItem("theme")=="dark");
   const companies=[
-    ...new Set(
-      user.map((u)=>u.company.name)
+    ...new Set(user.map((u)=>u.company.name)
     ),
   ];
-  const cities=[
-    ...new Set(user.map((u)=> u.address.city)),
-  ];
+const cities=[ ...new Set(user.map((u)=> u.address.city)),];
 const filteredUser = user.filter((user) => {
-  const matchesSearch =
-    user.name
-      .toLowerCase()
-      .includes(search.toLowerCase()) ||
-    user.username
-      .toLowerCase()
-      .includes(search.toLowerCase()) ||
-    user.email
-      .toLowerCase()
-      .includes(search.toLowerCase());
-  const matchesCompany =
-    companyFilter === "" ||
-    user.company.name === companyFilter;
-
-  const matchesCity =
-    cityFilter === "" ||
-    user.address.city === cityFilter;
-const matchesFavorite =
-  !showFavorites ||
-  favorites.includes(user.id);
+  const matchesSearch =user.name.toLowerCase().includes(search.toLowerCase()) ||user.username.toLowerCase().includes(search.toLowerCase()) ||
+  user.email.toLowerCase().includes(search.toLowerCase());
+  const matchesCompany =companyFilter === "" ||user.company.name === companyFilter;
+const matchesCity =cityFilter === "" ||user.address.city === cityFilter;
+const matchesFavorite =!showFavorites ||favorites.includes(user.id);
   return (
     matchesSearch &&
     matchesCompany &&
     matchesCity&& matchesFavorite
   );
 });
-const uniqueCities = new Set(
-  filteredUser.map((user) => user.address.city)
-).size;
-
-const uniqueCompanies = new Set(
-  filteredUser.map((user) => user.company.name)
-).size;
-  const sortedUsers = [...filteredUser];
+const uniqueCities = new Set(filteredUser.map((user) => user.address.city)).size;
+const uniqueCompanies = new Set(filteredUser.map((user) => user.company.name)).size;
+const sortedUsers = [...filteredUser];
   if (sortBy === "name-asc") {
-    sortedUsers.sort((a, b) =>
-      a.name.localeCompare(b.name)
+    sortedUsers.sort((a, b) => a.name.localeCompare(b.name)
     );
   }
   if (sortBy === "name-desc") {
-    sortedUsers.sort((a, b) =>
-      b.name.localeCompare(a.name)
+    sortedUsers.sort((a, b) =>b.name.localeCompare(a.name)
     );
   }
   if (sortBy === "username-asc") {
-    sortedUsers.sort((a, b) =>
-      a.username.localeCompare(b.username)
+    sortedUsers.sort((a, b) =>a.username.localeCompare(b.username)
     );
   }
   if (sortBy === "username-desc") {
-    sortedUsers.sort((a, b) =>
-      b.username.localeCompare(a.username)
+    sortedUsers.sort((a, b) =>b.username.localeCompare(a.username)
     );
   }
   if (sortBy === "email-asc") {
-    sortedUsers.sort((a, b) =>
-      a.email.localeCompare(b.email)
+    sortedUsers.sort((a, b) => a.email.localeCompare(b.email)
     );
   }
   if (sortBy === "email-desc") {
-    sortedUsers.sort((a, b) =>
-      b.email.localeCompare(a.email)
+    sortedUsers.sort((a, b) => b.email.localeCompare(a.email)
     );
   }
   const usersPerPage = 5;
   const lastUserIndex =currentPage * usersPerPage;
   const firstUserIndex =lastUserIndex - usersPerPage;
-  const currentUsers = sortedUsers.slice(
-    firstUserIndex,
-    lastUserIndex
-  );
-  const totalPages = Math.ceil(
-    sortedUsers.length / usersPerPage
-  );
+  const currentUsers = sortedUsers.slice(firstUserIndex,lastUserIndex);
+  const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
   if (error) {
   return <h1>{error}</h1>;
 }
@@ -108,70 +75,76 @@ const uniqueCompanies = new Set(
 }
 const toggleTheme = () => {
   const newTheme = !darkMode;
+setDarkMode(newTheme);
 
-  setDarkMode(newTheme);
-
-  localStorage.setItem(
-    "theme",
-    newTheme ? "dark" : "light"
-  );
+  localStorage.setItem( "theme",newTheme ? "dark" : "light" );
 };
 const toggleFavorite = (userId: number) => {
-  setFavorites((prev) =>
-    prev.includes(userId)
-      ? prev.filter((id) => id !== userId)
-      : [...prev, userId]
-  );
+  setFavorites((prev) =>prev.includes(userId)? prev.filter((id) => id !== userId): [...prev, userId]);
 };
 const exportToCSV = () => {
-  const headers = [
-    "Name",
-    "Username",
-    "Email",
-    "Phone",
-    "Website",
-    "Company",
-    "City",
-  ];
-
-  const rows = filteredUser.map((user) => [
-    user.name,
-    user.username,
-    user.email,
-    user.phone,
-    user.website,
-    user.company.name,
-    user.address.city,
-  ]);
-
+  const headers = ["Name","Username","Email","Phone","Website","Company","City",];
+  const rows = filteredUser.map((user) => [ user.name,user.username, user.email,user.phone,user.website,user.company.name,user.address.city,]);
   const csvContent = [
     headers.join(","),
     ...rows.map((row) => row.join(",")),
   ].join("\n");
-
   const blob = new Blob(
     [csvContent],
     { type: "text/csv;charset=utf-8;" }
   );
-
-  const url =
-    window.URL.createObjectURL(blob);
-
-  const link =
-    document.createElement("a");
-
+  const url =window.URL.createObjectURL(blob);
+  const link =document.createElement("a");
   link.href = url;
   link.download = "users.csv";
-
   link.click();
-
   window.URL.revokeObjectURL(url);
 };
-  return (
-    
-    
-    <div className={darkMode ? "dashboard dark":"dashboard light"}>
+  return (    
+  <div className={darkMode ? "dashboard dark" : "dashboard light"}>
+     <div className="dashboard-shell"></div>
+ <div className="top-bar">
+  <div className="dashboard-title">
+    <div className="profile-icon">👤</div>
     <h1>User Dashboard</h1>
+  </div>
+
+  <details className="stats-dropdown">
+    <summary>Dashboard Stats ▾</summary>
+
+  <div className="stats-content">
+  <button
+    className="stat-item"
+  onClick={() => {
+    setShowFavorites(true);setActiveStat("favorites");
+}}
+  >
+    ❤️ Favorites: {favorites.length}
+  </button>
+
+  <button
+    className="stat-item"
+    onClick={() => setActiveStat("users")}
+  >
+    👥 Users: {filteredUser.length}
+  </button>
+
+  <button
+    className="stat-item"
+    onClick={() => setActiveStat("companies")}
+  >
+    🏢 Companies: {uniqueCompanies}
+  </button>
+
+  <button
+    className="stat-item"
+    onClick={() => setActiveStat("cities")}
+  >
+    📍 Cities: {uniqueCities}
+  </button>
+</div>
+  </details>
+</div>
   <button
       className="theme-toggle"
       onClick={toggleTheme}
@@ -181,6 +154,15 @@ const exportToCSV = () => {
         : "🌙 Dark Mode"}
     </button>
  <div className="controls">
+<button
+  className="stat-item"
+  onClick={() => {
+    setShowFavorites(true);
+    setCurrentPage(1);
+  }}
+>
+  ❤️ Favorites: {favorites.length}
+</button>
   <button
     className="export-btn"
     onClick={exportToCSV}
@@ -210,71 +192,62 @@ const exportToCSV = () => {
     <option value="email-desc">Email (Z-A)</option>
   </select>
 
-  <select
-    className="sort-select"
-    value={companyFilter}
-    onChange={(e) => {
-      setCompanyFilter(e.target.value);
-      setCurrentPage(1);
-    }}
-  >
-    <option value="">All Companies</option>
-
-    {companies.map((company) => (
-      <option key={company} value={company}>
-        {company}
-      </option>
-    ))}
-  </select>
-
-  <select
-    className="sort-select"
-    value={cityFilter}
-    onChange={(e) => {
-      setCityFilter(e.target.value);
-      setCurrentPage(1);
-    }}
-  >
-    <option value="">All Cities</option>
-
-    {cities.map((city) => (
-      <option key={city} value={city}>
-        {city}
-      </option>
-    ))}
-  </select>
-</div>
-
-<div
-  className={`stat-chip ${
-    showFavorites ? "active-chip" : ""
-  }`}
-  onClick={() =>
-    setShowFavorites(!showFavorites)
-  }
+ <select
+  className="sort-select"
+  value={companyFilter}
+  onChange={(e) => {
+    setCompanyFilter(e.target.value);
+    setCurrentPage(1);
+  }}
 >
-  ❤️ {favorites.length} Favorites
+  <option value="">All Companies</option>
+
+  {companies.map((company) => (
+    <option key={company} value={company}>
+      {company}
+    </option>
+  ))}
+</select>
+
+<select
+  className="sort-select"
+  value={cityFilter}
+  onChange={(e) => {
+    setCityFilter(e.target.value);
+    setCurrentPage(1);
+  }}
+>
+  <option value="">All Cities</option>
+  {cities.map((city) => (
+    <option key={city} value={city}>
+      {city}
+    </option>
+  ))}
+</select>
 </div>
-
-  <div className="stat-chip">
-    👥 {filteredUser.length} Users
-  </div>
-
-  <div className="stat-chip">
-    🏢 {uniqueCompanies} Companies
-  </div>
-
-  <div className="stat-chip">
-    📍 {uniqueCities} Cities
-  </div>
-</div>
-      {filteredUser.length === 0 ? (
+{filteredUser.length === 0 ? (
         <h2>No users found</h2>
       ) : (
-        <>
-          <div className="user-grid">
-            {currentUsers.map((user) => (
-              <UserCard
+       
+       <>
+  {showFavorites && (
+  <div className="favorites-header">
+    <h2>Favorite Users</h2>
+
+    <button
+      className="back-home-btn"
+      onClick={() => {
+        setShowFavorites(false);
+        setCurrentPage(1);
+      }}
+    >
+      🏠 Back to All Users
+    </button>
+  </div>
+)}
+<div className="user-grid">
+{currentUsers.map((user) => (
+                <UserCard
                 key={user.id}
                 user={user}
                 isFavorite={favorites.includes(user.id)}
@@ -293,12 +266,10 @@ const exportToCSV = () => {
             >
               Previous
             </button>
-
             <span className="page-info">
               Page {currentPage} of{" "}
               {totalPages}
             </span>
-
             <button
               onClick={() =>
                 setCurrentPage(
