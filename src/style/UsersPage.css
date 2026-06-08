@@ -45,7 +45,6 @@
   background: linear-gradient(135deg, #4f46e5, #2563eb);
 }
 
-/* ── Stats Dropdown ── */
 .stats-dropdown {
   @apply relative;
 }
@@ -68,7 +67,6 @@
   @apply bg-slate-800 text-white;
 }
 
-/* ── Theme Toggle ── */
 .theme-toggle {
   @apply bg-white border-0 rounded-xl px-5 py-3 font-bold cursor-pointer
          transition-colors duration-300 hover:bg-gray-100 text-gray-900;
@@ -78,7 +76,6 @@
   @apply bg-blue-600 text-white hover:bg-blue-700;
 }
 
-/* ── Controls Bar ── */
 .controls {
   @apply flex flex-wrap items-center gap-4 bg-white p-5 rounded-2xl
          mb-5 shadow-md;
@@ -88,7 +85,6 @@
   @apply bg-slate-800;
 }
 
-/* ── Sort / Filter Select ── */
 .sort-select {
   @apply px-4 py-3 rounded-2xl border border-gray-200 bg-white min-w-[160px]
          text-sm font-medium outline-none cursor-pointer
@@ -99,20 +95,15 @@
   @apply bg-slate-900 text-white border-slate-600;
 }
 
-/* ── Export Button ── */
 .export-btn {
   @apply bg-green-600 text-white border-0 rounded-2xl px-6 py-3.5 font-bold
          cursor-pointer transition-all duration-300
          hover:bg-green-700 hover:-translate-y-0.5;
 }
-
-/* ── User Grid ── */
 .user-grid {
   @apply mt-4 grid gap-5;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
-
-/* ── User Card (dashboard context overrides) ── */
 .dashboard.dark .user-card {
   @apply bg-slate-800 border-slate-700;
 }
@@ -129,8 +120,6 @@
 .dashboard.dark .favorite-btn {
   @apply bg-slate-700;
 }
-
-/* ── Stats / Stat Item ── */
 .stat-item {
   @apply w-full px-3 py-3 border-0 rounded-xl bg-transparent text-inherit
          text-left cursor-pointer font-medium transition-colors duration-200
@@ -141,12 +130,9 @@
   @apply text-white hover:bg-white/10;
 }
 
-/* ── Favorites Header ── */
 .favorites-header {
   @apply flex items-center gap-4 mb-4;
 }
-
-/* ── Pagination ── */
 .pagination {
   @apply mt-8 flex justify-center items-center gap-5;
 }
@@ -165,7 +151,6 @@
   @apply text-gray-300;
 }
 
-/* ── Details Panel ── */
 .details-panel {
   @apply my-5 p-5 bg-white rounded-2xl shadow-md;
 }
@@ -177,25 +162,17 @@
 .details-panel p {
   @apply py-2 border-b border-gray-100 text-gray-700;
 }
-
-/* ── Loading ── */
 .loading {
   @apply flex items-center justify-center min-h-screen text-2xl text-gray-500 font-semibold;
 }
-
-/* ── Back Home Button ── */
 .back-home-btn {
   @apply bg-blue-600 text-white border-0 px-5 py-3 rounded-xl cursor-pointer
          mb-5 font-semibold hover:opacity-90 transition-opacity;
 }
-
-/* ── Favorite active state ── */
 .favorite-btn.active,
 .favorite.active {
   @apply text-amber-500;
 }
-
-/* ── Search override in dashboard ── */
 .dashboard.dark .search-input {
   @apply bg-slate-900 text-white border-slate-600 placeholder:text-slate-400;
 }

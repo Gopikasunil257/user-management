@@ -1,4 +1,3 @@
-/* SearchBar Tailwind Styles */
 @reference "tailwindcss";
 .search-container {
   @apply relative;
