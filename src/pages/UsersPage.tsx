@@ -58,7 +58,7 @@ const sortedUsers = [...filteredUser];
     sortedUsers.sort((a, b) => b.email.localeCompare(a.email)
     );
   }
-  const usersPerPage = 5;
+  const usersPerPage = 3;
   const lastUserIndex =currentPage * usersPerPage;
   const firstUserIndex =lastUserIndex - usersPerPage;
   const currentUsers = sortedUsers.slice(firstUserIndex,lastUserIndex);
