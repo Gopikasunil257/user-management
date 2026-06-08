@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import UserCard from "../components/UserCard";
 import { useUser } from "../hooks/UseUser";
 import SearchBar from "../components/SearchBar";
@@ -10,7 +10,6 @@ function UsersPage() {
   const [companyFilter,setCompanyFilter]=useState("");
   const[cityFilter,setCityFilter]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [favorites, setFavorites] = useState<number[]>([]);
   const [showFavorites, setShowFavorites] =useState(false);
   const [activeStat, setActiveStat] = useState("");
   const[darkMode,setDarkMode]=useState(localStorage.getItem("theme")=="dark");
@@ -18,6 +17,19 @@ function UsersPage() {
     ...new Set(user.map((u)=>u.company.name)
     ),
   ];
+  const [favorites, setFavorites] = useState<number[]>(() => {
+  const savedFavorites = localStorage.getItem("favorites");
+
+  return savedFavorites
+    ? JSON.parse(savedFavorites)
+    : [];
+});
+useEffect(() => {
+  localStorage.setItem(
+    "favorites",
+    JSON.stringify(favorites)
+  );
+}, [favorites]);
 const cities=[ ...new Set(user.map((u)=> u.address.city)),];
 const filteredUser = user.filter((user) => {
   const matchesSearch =user.name.toLowerCase().includes(search.toLowerCase()) ||user.username.toLowerCase().includes(search.toLowerCase()) ||
@@ -59,7 +71,7 @@ const sortedUsers = [...filteredUser];
     sortedUsers.sort((a, b) => b.email.localeCompare(a.email)
     );
   }
-  const usersPerPage = 3;
+  const usersPerPage = 5;
   const lastUserIndex =currentPage * usersPerPage;
   const firstUserIndex =lastUserIndex - usersPerPage;
   const currentUsers = sortedUsers.slice(firstUserIndex,lastUserIndex);
@@ -102,6 +114,7 @@ const exportToCSV = () => {
   window.URL.revokeObjectURL(url);
 };
   return (    
+    
   <div className={darkMode ? "dashboard dark" : "dashboard light"}>
      <div className="dashboard-shell">
  <div className="top-bar">
@@ -120,6 +133,7 @@ const exportToCSV = () => {
     setShowFavorites(true);setActiveStat("favorites");
 }}
   >
+
     ❤️ Favorites: {favorites.length}
   </button>
 

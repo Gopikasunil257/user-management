@@ -1,71 +1,42 @@
+/* UserCard Tailwind Styles */
+@reference "tailwindcss";
 .user-card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-
-  width: 300px;
-  padding: 20px;
-
-  text-align: center;
+  @apply bg-white border border-gray-200 rounded-2xl w-[300px] p-5 text-center relative
+         transition-shadow duration-300 hover:shadow-2xl;
 }
 
 .avatar {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 15px;
-
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #2563eb;
-  color: white;
-
-  font-size: 2rem;
-  font-weight: bold;
+  @apply w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center
+         text-white text-3xl font-bold;
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
 }
 
 .user-card h2 {
-  font-size: 1.8rem;
-  line-height: 1.2;
-  margin: 10px 0;
-  color: #111827;
+  @apply text-2xl leading-tight my-2.5 text-gray-900;
 }
 
 .user-card p {
-  margin: 8px 0;
-  font-size: 0.95rem;
-  color: #6b7280;
+  @apply my-1.5 text-sm text-gray-500;
 }
 
 .details-btn {
-  display: inline-block;
-  margin-top: 15px;
-
-  padding: 10px 20px;
-
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-
-  text-decoration: none;
-  font-weight: 600;
+  @apply inline-block mt-3 px-5 py-2.5 rounded-xl text-white font-bold
+         no-underline transition-all duration-300 hover:opacity-90 hover:-translate-y-0.5;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
 }
 
 .favorite-btn {
-  margin-left: auto;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
+  @apply absolute top-4 right-4 w-12 h-12 border-0 rounded-full bg-white
+         shadow-md cursor-pointer transition-transform duration-300
+         hover:scale-110 text-xl flex items-center justify-center;
 }
 
 .users-grid {
-  display: grid;
+  @apply grid justify-center gap-6 p-5;
   grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
-  justify-content: center;
-  gap: 24px;
-  padding: 20px;
+}
+
+.company-badge {
+  @apply inline-block mt-2 px-3.5 py-2 rounded-full bg-indigo-50 text-indigo-700
+         text-sm font-semibold;
 }

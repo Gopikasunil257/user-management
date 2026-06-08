@@ -1,42 +1,21 @@
+/* SearchBar Tailwind Styles */
+@reference "tailwindcss";
+.search-container {
+  @apply relative;
+}
+
+.search-icon {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none;
+}
+
 .search-input {
-  width: 420px;
-  height: 48px;
-
-  padding: 0 18px;
-
-  border: 1px solid #dbe2ea;
-  border-radius: 12px;
-
-  font-size: 15px;
-
-  transition: all 0.3s ease;
+  @apply w-[420px] max-w-full h-12 pl-11 pr-4 border border-gray-300 rounded-xl
+         text-sm bg-white outline-none transition-all duration-300
+         focus:border-blue-600 focus:ring-4 focus:ring-blue-600/15
+         placeholder:text-gray-400;
 }
 
-.search-input:focus {
-  outline: none;
-
-  border-color: #2563eb;
-
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-}
-.search-container{
-  position:relative;
-}
-
-.search-icon{
-  position:absolute;
-  left:16px;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.search-input{
-  padding-left:45px;
-}
-.toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
-  align-items:center;
-  justify-content:center;
+.toolbar {
+  @apply flex flex-wrap gap-4 items-center justify-center
+         bg-white p-6 rounded-3xl shadow-sm mb-6;
 }
